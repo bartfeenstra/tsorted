@@ -1,0 +1,7 @@
+[run]
+source = tsorted
+omit = tsorted/tests/*
+
+[report]
+exclude_lines =
+    # pragma: no cover

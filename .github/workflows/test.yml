@@ -1,0 +1,58 @@
+name: Test
+
+on:
+  - push
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: 'Latest: Python 3.9'
+            os: ubuntu-latest
+            python: '3.9'
+          - name: 'Python 3.8'
+            os: ubuntu-latest
+            python: '3.8'
+          - name: 'Python 3.7'
+            os: ubuntu-latest
+            python: '3.7'
+          - name: 'Python 3.6'
+            os: ubuntu-latest
+            python: '3.6'
+
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v2
+
+      - name: Set up Python ${{ matrix.python }}
+        uses: actions/setup-python@v2
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Build the development environment
+        run: |
+          ./bin/build-dev
+        shell: bash
+
+      - name: Get the pip cache directory path
+        id: pip-cache
+        run: |
+          echo "::set-output name=dir::$(pip cache dir)"
+
+      - name: Cache the pip cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.pip-cache.outputs.dir }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Run the tests
+        run: |
+          ./bin/test
+        shell: bash
+
+      - name: Upload code coverage
+        uses: codecov/codecov-action@v1

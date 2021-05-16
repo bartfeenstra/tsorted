@@ -1,0 +1,9 @@
+# Build artifacts.
+/.tox
+/tsorted.egg-info
+/build
+/dist
+*.pyc
+
+# Test artifacts.
+/.coverage
