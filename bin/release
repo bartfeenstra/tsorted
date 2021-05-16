@@ -45,8 +45,8 @@ git tag "$VERSION"
 ./bin/build-package
 twine upload --repository-url https://upload.pypi.org/legacy/ ./dist/*
 
-# Revert back to master.
-git checkout master
+# Revert back to main.
+git checkout main
 git branch -D "release-$VERSION"
 
 # Push changes.
