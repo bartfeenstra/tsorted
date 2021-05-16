@@ -18,7 +18,7 @@ graph = {
     4: {3},
 }
 tsorted(graph)
-# >>> [1, 2, 4, 3]
+# >>> OrderedSet([1, 2, 4, 3])
 ```
 
 A grouped topological sort:
@@ -30,7 +30,7 @@ graph = {
     3: {4},
 }
 tsorted_grouped(graph)
-# >>> [{1}, {2, 3}, {4}]
+# >>> OrderedSet([frozenset({1}), frozenset({2, 3}), frozenset({4})])
 ```
 
 ## Development
